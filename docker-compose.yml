@@ -1,0 +1,74 @@
+name: tenderpulse
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: tenderpulse
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-tenderpulse}
+      POSTGRES_DB: tenderpulse
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./backend/api/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tenderpulse -d tenderpulse"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://tenderpulse:${POSTGRES_PASSWORD:-tenderpulse}@db:5432/tenderpulse
+      ADMIN_API_KEY: ${ADMIN_API_KEY:-change-me-admin-key}
+      PUBLIC_APP_URL: ${PUBLIC_APP_URL:-http://localhost:8080}
+      CORS_ORIGINS: ${PUBLIC_APP_URL:-http://localhost:8080},http://localhost:5173
+      COLLECT_ENABLED: ${COLLECT_ENABLED:-true}
+      COLLECT_HOUR: ${COLLECT_HOUR:-6}
+      COLLECT_MINUTE: ${COLLECT_MINUTE:-30}
+      COLLECT_TIMEZONE: Europe/Paris
+      COLLECT_LOOKBACK_DAYS: ${COLLECT_LOOKBACK_DAYS:-2}
+      COLLECT_MAX_RECORDS: ${COLLECT_MAX_RECORDS:-5000}
+      LLM_PROVIDER: ${LLM_PROVIDER:-none}
+      LLM_BASE_URL: ${LLM_BASE_URL:-}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_MODEL: ${LLM_MODEL:-}
+      LLM_MAX_PER_RUN: ${LLM_MAX_PER_RUN:-200}
+      LLM_CONCURRENCY: ${LLM_CONCURRENCY:-3}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM: ${SMTP_FROM:-}
+      SMTP_STARTTLS: ${SMTP_STARTTLS:-true}
+      DIGEST_AUTO_SEND: ${DIGEST_AUTO_SEND:-false}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=4)"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+  frontend:
+    build:
+      context: ./frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+
+volumes:
+  pgdata:
