@@ -167,3 +167,34 @@ async def test_full_multi_tenant_workflow(api: httpx.AsyncClient):
     assert (await api.get(f"{base}/opportunities/{top['id']}", headers=tenant_key)).status_code == 404
     assert (await api.delete(f"/api/tenants/{other['id']}", headers=ADMIN)).status_code == 204
     assert (await api.get("/api/me", headers=other_key)).status_code == 401
+
+
+async def test_profile_rescore_keeps_scores_written_by_a_concurrent_collection(api: httpx.AsyncClient):
+    """Régression : la ré-analyse lancée à la création d'un profil effaçait les scores qu'une collecte
+    simultanée venait d'écrire (nettoyage final calculé sur une liste d'avis périmée)."""
+    from backend.api import repository as repo
+
+    service = api._transport.app.state.service  # type: ignore[attr-defined]
+    created = (await api.post("/api/tenants", headers=ADMIN, json={"name": "Course SAS"})).json()
+    key = {"X-API-Key": created["api_key"]}
+    profile = (await api.post(f"/api/tenants/{created['id']}/profiles", headers=key, json=fx.PROFILE_DATA)).json()
+    for _ in range(100):                      # laisse finir la ré-analyse de fond (base vide : immédiate)
+        if not service._background:
+            break
+        await asyncio.sleep(0.02)
+
+    # Une ré-analyse démarre et lit la liste des avis ouverts (vide)…
+    started_at = await repo.current_timestamp(service.pool)
+    # …pendant ce temps, une collecte importe les avis et écrit leurs scores…
+    run = (await api.post("/api/collect", headers=ADMIN, json={"max_records": 50})).json()
+    assert (await _wait_for_run(api, run["id"]))["status"] == "termine"
+    listing = f"/api/tenants/{created['id']}/profiles/{profile['id']}/opportunities"
+    scored = (await api.get(listing, headers=key)).json()["total"]
+    assert scored > 0
+    # …puis la ré-analyse termine son nettoyage avec sa liste périmée : elle ne doit rien effacer.
+    await repo.delete_untouched_scores(service.pool, profile["id"], [], started_at)
+    assert (await api.get(listing, headers=key)).json()["total"] == scored
+
+    # Un score réellement antérieur et devenu hors cible reste, lui, nettoyé.
+    await repo.delete_untouched_scores(service.pool, profile["id"], [], await repo.current_timestamp(service.pool))
+    assert (await api.get(listing, headers=key)).json()["total"] == 0

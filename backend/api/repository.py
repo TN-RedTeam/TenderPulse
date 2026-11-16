@@ -223,11 +223,24 @@ async def upsert_score(db: Executor, tenant_id: UUID, profile_id: UUID, tender_i
     )
 
 
-async def delete_untouched_scores(db: Executor, profile_id: UUID, keep_tender_ids: list[int]) -> None:
-    """Après une ré-analyse : retire les scores jamais traités par l'utilisateur et devenus hors cible."""
+async def current_timestamp(db: Executor) -> datetime:
+    """Horloge de la base : sert de repère aux opérations qui comparent des `scored_at`."""
+    return await db.fetchval("SELECT clock_timestamp()")
+
+
+async def delete_untouched_scores(
+    db: Executor, profile_id: UUID, keep_tender_ids: list[int], scored_before: datetime,
+) -> None:
+    """Après une ré-analyse : retire les scores jamais traités par l'utilisateur et devenus hors cible.
+
+    Seuls les scores antérieurs au début de la ré-analyse (`scored_before`) sont concernés : un score
+    écrit entre-temps par une collecte concurrente porte sur un avis que la ré-analyse n'a pas vu,
+    il ne doit pas être effacé.
+    """
     await db.execute(
-        "DELETE FROM tender_scores WHERE profile_id = $1 AND status = 'nouveau' AND NOT (tender_id = ANY($2::bigint[]))",
-        profile_id, keep_tender_ids,
+        "DELETE FROM tender_scores WHERE profile_id = $1 AND status = 'nouveau' "
+        "AND NOT (tender_id = ANY($2::bigint[])) AND scored_at < $3",
+        profile_id, keep_tender_ids, scored_before,
     )
 
 
