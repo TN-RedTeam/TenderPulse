@@ -1,0 +1,23 @@
+{
+  "idweb": "JDT-2602",
+  "objet": "Fourniture d'outillage et de quincaillerie pour les ateliers municipaux",
+  "nomacheteur": "Commune d'Exemple-en-Isère",
+  "famille": "FNS",
+  "nature": "APPEL_OFFRE",
+  "type_procedure": "PROCEDURE_ADAPTE",
+  "procedure_libelle": "Procédure adaptée",
+  "type_marche": [
+    "FOURNITURES"
+  ],
+  "code_departement": [
+    "38"
+  ],
+  "descripteur_libelle": [
+    "Outillage"
+  ],
+  "dateparution": "2026-11-19",
+  "datelimitereponse": "2026-12-15T12:00:00+01:00",
+  "criteres": null,
+  "donnees": "{\"FNSimple\": {\"initial\": {\"procedure\": {\"capaciteEcoFin\": \"Déclaration du candidat (DC1 et DC2).\"}, \"natureMarche\": {\"intitule\": \"Fourniture d'outillage et de quincaillerie pour les ateliers municipaux\", \"codeCPV\": {\"objetPrincipal\": {\"classPrincipale\": \"44510000\"}}, \"description\": \"Fourniture d'outillage à main et de petite quincaillerie pour les ateliers municipaux. Les candidats présenteront une certification ISO 14001 ou équivalent.\", \"lieuExecution\": \"(38)\", \"valeurEstimee\": {\"@devise\": \"EUR\", \"valeur\": \"60000\"}}}}}",
+  "url_avis": "https://www.boamp.fr/pages/avis/?q=idweb:JDT-2602"
+}

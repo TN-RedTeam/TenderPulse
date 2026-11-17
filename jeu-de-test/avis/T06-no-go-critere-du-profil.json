@@ -1,0 +1,23 @@
+{
+  "idweb": "JDT-2606",
+  "objet": "Fourniture de quincaillerie pour les écoles de la ville",
+  "nomacheteur": "Ville d'Exemple-sur-Rhône",
+  "famille": "MAPA",
+  "nature": "APPEL_OFFRE",
+  "type_procedure": "PROCEDURE_ADAPTE",
+  "procedure_libelle": "Procédure adaptée",
+  "type_marche": [
+    "FOURNITURES"
+  ],
+  "code_departement": [
+    "69"
+  ],
+  "descripteur_libelle": [
+    "Quincaillerie"
+  ],
+  "dateparution": "2026-11-19",
+  "datelimitereponse": "2026-12-20T12:00:00+01:00",
+  "criteres": null,
+  "donnees": "{\"MAPA\": {\"initial\": {\"natureMarche\": {\"fournitures\": \"\"}, \"description\": {\"objet\": \"Fourniture de quincaillerie pour les écoles de la ville\"}, \"caracteristiques\": {\"principales\": \"Fourniture de quincaillerie de bâtiment pour l'entretien des écoles. Les commandes devront être honorées en livraison sous 24 heures.\"}, \"renseignements\": {\"rensgComplt\": \"Montant estimé : 45 000 euros HT. Les offres sont remises par voie électronique.\"}}}}",
+  "url_avis": "https://www.boamp.fr/pages/avis/?q=idweb:JDT-2606"
+}

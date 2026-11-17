@@ -36,6 +36,7 @@ services:
       COLLECT_TIMEZONE: Europe/Paris
       COLLECT_LOOKBACK_DAYS: ${COLLECT_LOOKBACK_DAYS:-2}
       COLLECT_MAX_RECORDS: ${COLLECT_MAX_RECORDS:-5000}
+      BOAMP_BASE_URL: ${BOAMP_BASE_URL:-https://boamp-datadila.opendatasoft.com}
       LLM_PROVIDER: ${LLM_PROVIDER:-none}
       LLM_BASE_URL: ${LLM_BASE_URL:-}
       LLM_API_KEY: ${LLM_API_KEY:-}

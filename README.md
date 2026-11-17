@@ -126,6 +126,12 @@ Renseigner `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM`, 
 pour un envoi automatique après chaque collecte quotidienne. Sans SMTP, le digest reste accessible en HTML
 (bouton « Aperçu du digest » ou endpoint ci-dessous).
 
+## Jeu de test
+
+Le dossier [`jeu-de-test/`](jeu-de-test/) contient le profil d'un grossiste et treize avis de marché
+fictifs aux trois formats du BOAMP, avec la note et la décision attendues pour chacun, et un serveur
+BOAMP factice pour les collecter chez vous. Voir son [README](jeu-de-test/README.md).
+
 ## Tests
 
 ```bash

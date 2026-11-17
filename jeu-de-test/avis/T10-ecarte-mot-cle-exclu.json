@@ -1,0 +1,23 @@
+{
+  "idweb": "JDT-2610",
+  "objet": "Travaux de démolition et fourniture de matériaux de construction",
+  "nomacheteur": "Commune d'Exemple-sur-Rhône",
+  "famille": "FNS",
+  "nature": "APPEL_OFFRE",
+  "type_procedure": "PROCEDURE_ADAPTE",
+  "procedure_libelle": "Procédure adaptée",
+  "type_marche": [
+    "TRAVAUX"
+  ],
+  "code_departement": [
+    "69"
+  ],
+  "descripteur_libelle": [
+    "Démolition"
+  ],
+  "dateparution": "2026-11-19",
+  "datelimitereponse": "2026-12-20T12:00:00+01:00",
+  "criteres": null,
+  "donnees": "{\"FNSimple\": {\"initial\": {\"procedure\": {\"capaciteEcoFin\": \"Déclaration du candidat (DC1 et DC2).\"}, \"natureMarche\": {\"intitule\": \"Travaux de démolition et fourniture de matériaux de construction\", \"codeCPV\": {\"objetPrincipal\": {\"classPrincipale\": \"45111100\"}}, \"description\": \"Démolition d'un hangar et fourniture de matériaux de construction pour la reconstruction.\", \"lieuExecution\": \"(69)\", \"valeurEstimee\": {\"@devise\": \"EUR\", \"valeur\": \"150000\"}}}}}",
+  "url_avis": "https://www.boamp.fr/pages/avis/?q=idweb:JDT-2610"
+}

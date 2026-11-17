@@ -1,0 +1,23 @@
+{
+  "idweb": "JDT-2605",
+  "objet": "Fourniture d'outillage électroportatif pour le centre technique municipal",
+  "nomacheteur": "Commune d'Exemple-sur-Loire",
+  "famille": "MAPA",
+  "nature": "APPEL_OFFRE",
+  "type_procedure": "PROCEDURE_ADAPTE",
+  "procedure_libelle": "Procédure adaptée",
+  "type_marche": [
+    "FOURNITURES"
+  ],
+  "code_departement": [
+    "42"
+  ],
+  "descripteur_libelle": [
+    "Outillage"
+  ],
+  "dateparution": "2026-11-19",
+  "datelimitereponse": "2026-11-26T12:00:00+01:00",
+  "criteres": null,
+  "donnees": "{\"MAPA\": {\"initial\": {\"natureMarche\": {\"fournitures\": \"\"}, \"description\": {\"objet\": \"Fourniture d'outillage électroportatif pour le centre technique municipal\"}, \"caracteristiques\": {\"principales\": \"Fourniture de perceuses, visseuses et meuleuses sans fil avec leurs batteries.\"}, \"renseignements\": {\"rensgComplt\": \"Montant estimé : 25 000 euros HT. Les offres sont remises par voie électronique.\"}}}}",
+  "url_avis": "https://www.boamp.fr/pages/avis/?q=idweb:JDT-2605"
+}

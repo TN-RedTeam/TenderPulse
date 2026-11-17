@@ -1,0 +1,23 @@
+{
+  "idweb": "JDT-2612",
+  "objet": "Fourniture de matériaux de construction pour la salle des fêtes",
+  "nomacheteur": "Commune d'Exemple-dans-l'Ain",
+  "famille": "FNS",
+  "nature": "APPEL_OFFRE",
+  "type_procedure": "PROCEDURE_ADAPTE",
+  "procedure_libelle": "Procédure adaptée",
+  "type_marche": [
+    "FOURNITURES"
+  ],
+  "code_departement": [
+    "01"
+  ],
+  "descripteur_libelle": [
+    "Matériaux de construction"
+  ],
+  "dateparution": "2026-11-19",
+  "datelimitereponse": "2026-11-18T12:00:00+01:00",
+  "criteres": null,
+  "donnees": "{\"FNSimple\": {\"initial\": {\"procedure\": {\"capaciteEcoFin\": \"Déclaration du candidat (DC1 et DC2).\"}, \"natureMarche\": {\"intitule\": \"Fourniture de matériaux de construction pour la salle des fêtes\", \"codeCPV\": {\"objetPrincipal\": {\"classPrincipale\": \"44111000\"}}, \"description\": \"Fourniture de matériaux de construction pour la rénovation de la salle des fêtes.\", \"lieuExecution\": \"(01)\", \"valeurEstimee\": {\"@devise\": \"EUR\", \"valeur\": \"40000\"}}}}}",
+  "url_avis": "https://www.boamp.fr/pages/avis/?q=idweb:JDT-2612"
+}

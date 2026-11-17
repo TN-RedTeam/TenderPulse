@@ -1,0 +1,23 @@
+{
+  "idweb": "JDT-2601",
+  "objet": "Fourniture de matériaux de construction pour les services techniques",
+  "nomacheteur": "Ville d'Exemple-sur-Rhône",
+  "famille": "JOUE",
+  "nature": "APPEL_OFFRE",
+  "type_procedure": "OUVERT",
+  "procedure_libelle": "Procédure ouverte",
+  "type_marche": [
+    "FOURNITURES"
+  ],
+  "code_departement": [
+    "69"
+  ],
+  "descripteur_libelle": [
+    "Matériaux de construction"
+  ],
+  "dateparution": "2026-11-19",
+  "datelimitereponse": "2026-12-21T12:00:00+01:00",
+  "criteres": null,
+  "donnees": "{\"EFORMS\": {\"ContractNotice\": {\"cac:ProcurementProject\": {\"cbc:Name\": {\"@languageID\": \"FRA\", \"#text\": \"Fourniture de matériaux de construction pour les services techniques\"}, \"cbc:Description\": {\"@languageID\": \"FRA\", \"#text\": \"Accord-cadre à bons de commande pour la fourniture de matériaux de construction et de quincaillerie destinés à l'entretien des bâtiments communaux, pour une durée de douze mois.\"}, \"cbc:ProcurementTypeCode\": {\"@listName\": \"contract-nature\", \"#text\": \"supplies\"}, \"cac:RequestedTenderTotal\": {\"cbc:EstimatedOverallContractAmount\": {\"@currencyID\": \"EUR\", \"#text\": \"120000\"}}, \"cac:MainCommodityClassification\": {\"cbc:ItemClassificationCode\": {\"@listName\": \"cpv\", \"#text\": \"44111000\"}}}}}}",
+  "url_avis": "https://www.boamp.fr/pages/avis/?q=idweb:JDT-2601"
+}

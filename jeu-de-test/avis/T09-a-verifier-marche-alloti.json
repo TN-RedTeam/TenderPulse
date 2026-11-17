@@ -1,0 +1,23 @@
+{
+  "idweb": "JDT-2609",
+  "objet": "Fourniture de matériaux de construction pour le futur groupe scolaire des Brotteaux",
+  "nomacheteur": "Métropole fictive de Lyon",
+  "famille": "JOUE",
+  "nature": "APPEL_OFFRE",
+  "type_procedure": "OUVERT",
+  "procedure_libelle": "Procédure ouverte",
+  "type_marche": [
+    "FOURNITURES"
+  ],
+  "code_departement": [
+    "69"
+  ],
+  "descripteur_libelle": [
+    "Matériaux de construction"
+  ],
+  "dateparution": "2026-11-19",
+  "datelimitereponse": "2026-12-20T12:00:00+01:00",
+  "criteres": null,
+  "donnees": "{\"EFORMS\": {\"ContractNotice\": {\"cac:ProcurementProject\": {\"cbc:Name\": {\"@languageID\": \"FRA\", \"#text\": \"Fourniture de matériaux de construction pour le futur groupe scolaire des Brotteaux\"}, \"cbc:Description\": {\"@languageID\": \"FRA\", \"#text\": \"Fourniture de matériaux de construction en deux lots pour la construction du groupe scolaire.\"}, \"cbc:ProcurementTypeCode\": {\"@listName\": \"contract-nature\", \"#text\": \"supplies\"}, \"cac:RequestedTenderTotal\": {\"cbc:EstimatedOverallContractAmount\": {\"@currencyID\": \"EUR\", \"#text\": \"1200000\"}}, \"cac:MainCommodityClassification\": {\"cbc:ItemClassificationCode\": {\"@listName\": \"cpv\", \"#text\": \"44111000\"}}}, \"cac:ProcurementProjectLot\": [{\"cbc:ID\": {\"@schemeName\": \"Lot\", \"#text\": \"LOT-0001\"}, \"cac:ProcurementProject\": {\"cbc:ID\": \"1\", \"cbc:Name\": {\"@languageID\": \"FRA\", \"#text\": \"Gros œuvre\"}, \"cbc:Description\": {\"@languageID\": \"FRA\", \"#text\": \"Ciment, granulats et blocs béton.\"}, \"cac:RequestedTenderTotal\": {\"cbc:EstimatedOverallContractAmount\": {\"@currencyID\": \"EUR\", \"#text\": \"850000\"}}, \"cac:MainCommodityClassification\": {\"cbc:ItemClassificationCode\": {\"@listName\": \"cpv\", \"#text\": \"44111000\"}}}}, {\"cbc:ID\": {\"@schemeName\": \"Lot\", \"#text\": \"LOT-0002\"}, \"cac:ProcurementProject\": {\"cbc:ID\": \"2\", \"cbc:Name\": {\"@languageID\": \"FRA\", \"#text\": \"Second œuvre\"}, \"cbc:Description\": {\"@languageID\": \"FRA\", \"#text\": \"Plaques de plâtre, isolants et menuiseries intérieures.\"}, \"cac:RequestedTenderTotal\": {\"cbc:EstimatedOverallContractAmount\": {\"@currencyID\": \"EUR\", \"#text\": \"350000\"}}, \"cac:MainCommodityClassification\": {\"cbc:ItemClassificationCode\": {\"@listName\": \"cpv\", \"#text\": \"44111000\"}}}}]}}}",
+  "url_avis": "https://www.boamp.fr/pages/avis/?q=idweb:JDT-2609"
+}
