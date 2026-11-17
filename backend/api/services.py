@@ -105,10 +105,13 @@ class TenderPulseService:
         if row is None:
             return {"tenders_examined": 0, "scores_written": 0}
         now = datetime.now(timezone.utc)
+        # Repère pris AVANT la lecture des avis : tout score écrit ensuite par une collecte
+        # concurrente est postérieur à ce repère et sera préservé par le nettoyage final.
+        started_at = await repo.current_timestamp(self.pool)
         tenders = await repo.list_open_tenders(self.pool, now)
         kept = await self.score_tenders(tenant_id, profile_id, repo.profile_from_row(row), tenders,
                                         LLMBudget(self.settings.llm_max_per_run), now)
-        await repo.delete_untouched_scores(self.pool, profile_id, kept)
+        await repo.delete_untouched_scores(self.pool, profile_id, kept, started_at)
         logger.info("Profil %s : %d avis examinés, %d scores", profile_id, len(tenders), len(kept))
         return {"tenders_examined": len(tenders), "scores_written": len(kept)}
 

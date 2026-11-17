@@ -311,3 +311,63 @@ async def test_llm_is_never_called_for_prefiltered_tenders(profile, tenders):
     assert await ScoringPipeline(llm).analyze(profile, tenders["26-200006"], NOW) is None
     await llm.aclose()
     assert calls == []
+
+
+# ----------------------------------------------------------------------------- verrou déterministe du score
+
+def _inflating_llm(decision: str = "go") -> dict:
+    """Réponse d'un LLM trompé par un avis piégé : notes maximales partout et décision « go »."""
+    return {
+        "criteres": [{"cle": key, "note": 100, "justification": "Adéquation parfaite."}
+                     for key in ("metier", "capacite", "certifications")],
+        "criteres_eliminatoires": [], "resume": ["a", "b", "c", "d", "e"], "decision": decision,
+    }
+
+
+async def test_llm_cannot_inflate_scores_beyond_the_deterministic_lock(profile, tenders):
+    from backend.scoring.heuristic import GRID
+    from backend.scoring.llm import LLM_CRITERIA
+    from backend.scoring.pipeline import max_llm_uplift
+
+    for idweb in ("26-200001", "26-200003", "26-200004"):
+        baseline = await ScoringPipeline(None).analyze(profile, tenders[idweb], NOW)
+        if baseline is None:
+            continue
+        llm = LLMClient("openai", "https://llm.example/v1", "modele-test",
+                        transport=_openai_transport(json.dumps(_inflating_llm()), []))
+        analysis = await ScoringPipeline(llm).analyze(profile, tenders[idweb], NOW)
+        await llm.aclose()
+
+        base = {c.key: c.score for c in baseline.criteria}
+        for criterion in analysis.criteria:
+            if criterion.key in LLM_CRITERIA:
+                ceiling = min(criterion.max_score, base[criterion.key] + max_llm_uplift(criterion.max_score))
+                assert criterion.score <= ceiling, (idweb, criterion.key)
+            else:
+                assert criterion.score == base[criterion.key]     # critères factuels : jamais confiés au LLM
+        max_gain = sum(max_llm_uplift(GRID[key][1]) for key in LLM_CRITERIA)
+        assert analysis.score <= baseline.score + max_gain
+        # Le LLM ne transforme jamais seul un avis en « Go ».
+        if baseline.decision != Decision.GO:
+            assert analysis.decision != Decision.GO, idweb
+
+
+async def test_capped_note_is_explained_in_the_justification(profile, tenders):
+    llm = LLMClient("openai", "https://llm.example/v1", "modele-test",
+                    transport=_openai_transport(json.dumps(_inflating_llm()), []))
+    baseline = await ScoringPipeline(None).analyze(profile, tenders["26-200003"], NOW)
+    analysis = await ScoringPipeline(llm).analyze(profile, tenders["26-200003"], NOW)
+    await llm.aclose()
+    capped = [c for c, b in zip(analysis.criteria, baseline.criteria) if c.score > b.score or "plafonnée" in c.justification]
+    assert any("plafonnée" in c.justification for c in capped)
+
+
+async def test_llm_can_still_lower_a_score(profile, tenders):
+    pessimistic = dict(_inflating_llm("no_go"), criteres=[
+        {"cle": key, "note": 0, "justification": "Hors sujet."} for key in ("metier", "capacite", "certifications")])
+    llm = LLMClient("openai", "https://llm.example/v1", "modele-test",
+                    transport=_openai_transport(json.dumps(pessimistic), []))
+    analysis = await ScoringPipeline(llm).analyze(profile, tenders["26-200001"], NOW)
+    await llm.aclose()
+    assert {c.key: c.score for c in analysis.criteria}["metier"] == 0
+    assert analysis.decision != Decision.GO

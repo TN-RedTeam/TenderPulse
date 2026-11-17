@@ -19,9 +19,19 @@ logger = logging.getLogger("tenderpulse.scoring")
 
 SUMMARY_LINES = 5
 
+# Verrou déterministe : le LLM lit un texte externe (l'avis), qui peut chercher à l'influencer.
+# Il peut baisser librement une note, mais ne peut la relever que d'une fraction du barème
+# au-dessus de la note calculée par les règles. Un avis piégé ne peut donc pas « gonfler » le score.
+LLM_MAX_UPLIFT_RATIO = 0.25
+
+
+def max_llm_uplift(max_score: int) -> int:
+    """Nombre de points que le LLM peut ajouter à la note déterministe d'un critère."""
+    return int(max_score * LLM_MAX_UPLIFT_RATIO)
+
 
 def _merge_criteria(baseline: list[CriterionScore], llm: LLMAnalysis) -> list[CriterionScore]:
-    """Remplace les critères sémantiques par ceux du LLM, bornés par la grille."""
+    """Remplace les critères sémantiques par ceux du LLM, bornés par la grille et par le verrou déterministe."""
     merged = []
     for criterion in baseline:
         proposal = llm.criterion(criterion.key) if criterion.key in LLM_CRITERIA else None
@@ -29,10 +39,17 @@ def _merge_criteria(baseline: list[CriterionScore], llm: LLMAnalysis) -> list[Cr
             merged.append(criterion)
             continue
         max_score = GRID[criterion.key][1]
+        proposed = max(0, min(max_score, round(proposal.note)))
+        ceiling = min(max_score, criterion.score + max_llm_uplift(max_score))
+        justification = proposal.justification.strip() or criterion.justification
+        if proposed > ceiling:
+            justification += (
+                f" [Note de l'IA ({proposed}/{max_score}) plafonnée à {ceiling}/{max_score} : "
+                f"calcul déterministe {criterion.score}/{max_score}.]"
+            )
         merged.append(CriterionScore(
             key=criterion.key, label=criterion.label, max_score=max_score,
-            score=max(0, min(max_score, round(proposal.note))),
-            justification=proposal.justification.strip() or criterion.justification,
+            score=min(proposed, ceiling), justification=justification,
         ))
     return merged
 
@@ -119,8 +136,9 @@ class ScoringPipeline:
         criteria = _merge_criteria(baseline.criteria, llm_result)
         flags = _merge_flags(baseline.eliminatory, llm_result)
         score, decision = finalize(criteria, flags)
-        # Le LLM peut tempérer un « Go », jamais transformer seul un avis en « Go ».
-        if decision == Decision.GO and llm_result.decision != "go":
+        # Le LLM peut tempérer un « Go », jamais transformer seul un avis en « Go » : un « Go » exige
+        # que les règles déterministes le donnent aussi, et que le LLM le confirme.
+        if decision == Decision.GO and (llm_result.decision != "go" or baseline.decision != Decision.GO):
             decision = Decision.A_VERIFIER
         date_limite = tender.date_limite or llm_result.parsed_deadline()
         budget = tender.budget_estime if tender.budget_estime is not None else llm_result.budget_estime
