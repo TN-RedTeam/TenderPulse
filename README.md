@@ -5,6 +5,38 @@ Veille automatisée des appels d'offres publics pour PME : TenderPulse collecte 
 d'adéquation sur 100**, les **critères éliminatoires**, une **synthèse décisionnelle en 5 lignes**
 (Go / À vérifier / No-Go) et un **digest quotidien** prêt à envoyer par e-mail.
 
+## À quoi sert ce dépôt, et quand l'utiliser
+
+**À quoi il sert.** TenderPulse fait la veille des marchés publics à la place de la PME : il collecte les
+avis du BOAMP chaque matin, les note selon le métier, la zone, les certifications et le chiffre
+d'affaires de l'entreprise, repère les critères éliminatoires et envoie un digest par e-mail.
+
+**Utilisez-le quand :**
+
+- une PME du BTP, de l'industrie ou des services répond à des appels d'offres publics ;
+- la veille dépend d'une personne qui n'a pas le temps de lire tous les avis ;
+- vous gérez plusieurs clients : chaque PME a sa clé d'API, ses profils et ses opportunités, cloisonnés ;
+- vous voulez un argument de prospection concret : le relevé des marchés de la semaine pour un prospect.
+
+**Ne l'utilisez pas quand :**
+
+- le client vise des marchés privés ou des plateformes autres que le BOAMP : seule cette source est lue ;
+- il attend une analyse du dossier de consultation : TenderPulse lit l'avis, pas les pièces jointes ;
+- l'argument de vente est la confidentialité : les avis sont publics et la collecte passe par Internet.
+  L'argument de TenderPulse est le chiffre d'affaires gagné.
+
+**Comment le lancer.** Sans IA (`LLM_PROVIDER=none`), le scoring est entièrement déterministe et suffit
+pour démarrer. Avec IA, l'analyse est plus fine ; la note de l'IA reste bornée par les règles. Chez un
+client, passez par la box CodeSafe (`LLM-exploits/codesafe-ai-box`).
+
+### Les trois dépôts CodeSafe
+
+| Dépôt | À quoi il sert | À utiliser quand |
+|---|---|---|
+| [`docflow-local`](https://github.com/TN-RedTeam/docflow-local) | Lire des factures et des documents de transport en PDF, contrôler les calculs, faire valider par un humain, exporter | une PME ressaisit des documents à la main et ne veut rien envoyer en ligne |
+| [`TenderPulse`](https://github.com/TN-RedTeam/TenderPulse) | Collecter chaque jour les appels d'offres publics et les noter selon le profil d'une PME | une PME répond à des marchés publics et fait sa veille à la main |
+| [`LLM-exploits`](https://github.com/TN-RedTeam/LLM-exploits) | Sécuriser, auditer et vendre : la box qui réunit les applications, l'outil d'audit, l'offre commerciale, et FreightGuard | vous installez chez un client, vous prouvez la sécurité, ou vous préparez un rendez-vous commercial |
+
 ## Architecture
 
 ```
