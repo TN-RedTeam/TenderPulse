@@ -1,0 +1,23 @@
+{
+  "idweb": "JDT-2603",
+  "objet": "Fourniture de matériaux de construction pour la rénovation des collèges",
+  "nomacheteur": "Département fictif de l'Ain",
+  "famille": "FNS",
+  "nature": "APPEL_OFFRE",
+  "type_procedure": "PROCEDURE_ADAPTE",
+  "procedure_libelle": "Procédure adaptée",
+  "type_marche": [
+    "FOURNITURES"
+  ],
+  "code_departement": [
+    "01"
+  ],
+  "descripteur_libelle": [
+    "Matériaux de construction"
+  ],
+  "dateparution": "2026-11-19",
+  "datelimitereponse": "2026-12-30T12:00:00+01:00",
+  "criteres": null,
+  "donnees": "{\"FNSimple\": {\"initial\": {\"procedure\": {\"capaciteEcoFin\": \"Le candidat doit justifier d'un chiffre d'affaires annuel minimum de 10 000 000 euros HT sur chacun des trois derniers exercices.\"}, \"natureMarche\": {\"intitule\": \"Fourniture de matériaux de construction pour la rénovation des collèges\", \"codeCPV\": {\"objetPrincipal\": {\"classPrincipale\": \"44111000\"}}, \"description\": \"Fourniture et livraison de matériaux de construction sur les chantiers de rénovation de six collèges.\", \"lieuExecution\": \"(01)\", \"valeurEstimee\": {\"@devise\": \"EUR\", \"valeur\": \"350000\"}}}}}",
+  "url_avis": "https://www.boamp.fr/pages/avis/?q=idweb:JDT-2603"
+}

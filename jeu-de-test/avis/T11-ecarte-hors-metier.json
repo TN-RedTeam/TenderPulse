@@ -1,0 +1,23 @@
+{
+  "idweb": "JDT-2611",
+  "objet": "Fourniture de denrées alimentaires pour la restauration scolaire",
+  "nomacheteur": "Commune d'Exemple-sur-Rhône",
+  "famille": "MAPA",
+  "nature": "APPEL_OFFRE",
+  "type_procedure": "PROCEDURE_ADAPTE",
+  "procedure_libelle": "Procédure adaptée",
+  "type_marche": [
+    "FOURNITURES"
+  ],
+  "code_departement": [
+    "69"
+  ],
+  "descripteur_libelle": [
+    "Denrées alimentaires"
+  ],
+  "dateparution": "2026-11-19",
+  "datelimitereponse": "2026-12-20T12:00:00+01:00",
+  "criteres": null,
+  "donnees": "{\"MAPA\": {\"initial\": {\"natureMarche\": {\"fournitures\": \"\"}, \"description\": {\"objet\": \"Fourniture de denrées alimentaires pour la restauration scolaire\"}, \"caracteristiques\": {\"principales\": \"Accord-cadre à bons de commande pour la fourniture de produits frais et d'épicerie.\"}, \"renseignements\": {\"rensgComplt\": \"Montant estimé : 80 000 euros HT.\"}}}}",
+  "url_avis": "https://www.boamp.fr/pages/avis/?q=idweb:JDT-2611"
+}
